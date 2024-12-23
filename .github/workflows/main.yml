@@ -21,12 +21,12 @@ jobs:
       - name: Run the script
         run: |
           python3 -c "
-print('*****************')
-print('ÜÇE BÖLÜNEBİLEN SAYILAR')
-print('******************')
-for i in range(1,101):
-    if((i % 3) != 0):
-        continue
-    else:
-        print(i)
-"
+          print('*****************')
+          print('ÜÇE BÖLÜNEBİLEN SAYILAR')
+          print('******************')
+          for i in range(1,101):
+              if((i % 3) != 0):
+                  continue
+              else:
+                  print(i)
+          "
