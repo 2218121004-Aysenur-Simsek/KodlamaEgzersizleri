@@ -1,0 +1,32 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main  # Ana branch'te push yapıldığında çalışacak
+  pull_request:
+    branches:
+      - main  # Ana branch'e yapılan pull requestlerde çalışacak
+
+jobs:
+  run:
+    runs-on: ubuntu-latest  # Ubuntu ortamında çalıştırılacak
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Kodu depodan çek
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Python 3.9 kullanacak
+      - name: Run the script
+        run: |
+          python3 -c "
+print('*****************')
+print('ÜÇE BÖLÜNEBİLEN SAYILAR')
+print('******************')
+for i in range(1,101):
+    if((i % 3) != 0):
+        continue
+    else:
+        print(i)
+"
