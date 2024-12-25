@@ -1,0 +1,48 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main  # Bu workflow, main branch'ine push yapıldığında çalışacak
+  pull_request:
+    branches:
+      - main  # Ana branch'e yapılan pull request'lerde çalışacak
+
+jobs:
+  run:
+    runs-on: ubuntu-latest  # Ubuntu ortamında çalışacak
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Kodu depodan çek
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Python 3.9 kullanacak
+
+      - name: Install dependencies
+        run: |
+          pip install pytest  # Pytest yükleme, testler için gerekli
+
+      - name: Run Python script
+        run: |
+          python3 -c "
+          print('*****************')
+          print('Numbers Divisible by 3')
+          print('******************')
+          for i in range(1, 101):
+              if (i % 3) == 0:
+                  print(i)
+          " > result.txt  # Çıktıyı result.txt dosyasına kaydediyoruz
+
+      - name: Run tests
+        run: |
+          echo 'import pytest' > test_script.py
+          echo 'def test_output():' >> test_script.py
+          echo '    with open("result.txt") as f:' >> test_script.py
+          echo '        output = f.read()' >> test_script.py
+          echo '    assert "3" in output' >> test_script.py  # 3 sayısının çıktıda yer almasını bekliyoruz
+          echo '    assert "99" in output' >> test_script.py  # 99 sayısının çıktıda yer almasını bekliyoruz
+          pytest test_script.py  # Testleri çalıştırıyoruz
+
